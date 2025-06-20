@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Cloner le dépôt
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Installer Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
 
@@ -22,4 +22,14 @@ jobs:
       run: pip install requests
 
     - name: Exécuter le script
-      run: python btc_price_usd.py
+      run: |
+        python btc_price_usd.py
+      continue-on-error: true  # Continue même en cas d'erreur pour voir les logs
+
+    - name: Vérifier le fichier généré (optionnel)
+      run: |
+        if [ -f "prix_btc_usd.txt" ]; then
+          cat prix_btc_usd.txt
+        else
+          echo "Fichier prix_btc_usd.txt non créé."
+        fi
