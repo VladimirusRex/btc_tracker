@@ -23,21 +23,24 @@ jobs:
 
     - name: Exécuter le script
       run: |
-        ls -la  # Vérifie les fichiers
+        ls -la
         python btc_price_usd.py || echo "Script failed with error $?"
       continue-on-error: true
 
     - name: Vérifier le fichier généré
       run: |
         if [ -f "prix_btc_usd.txt" ]; then
+          echo "Contenu de prix_btc_usd.txt :"
           cat prix_btc_usd.txt
         else
           echo "Fichier prix_btc_usd.txt non créé."
         fi
 
-    - name: Uploader le fichier comme artifact
-      uses: actions/upload-artifact@v4
-      if: always()  # Toujours uploader, même en cas d'échec
+    - name: Committer le fichier
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        name: btc-price-log
-        path: prix_btc_usd.txt
+        file_pattern: prix_btc_usd.txt
+        commit_message: "Mettre à jour prix_btc_usd.txt avec les données du $(date +'%Y-%m-%d %H:%M:%S')"
+        commit_user_name: "GitHub Action"
+        commit_user_email: "action@github.com"
+        commit_author: "GitHub Action <action@github.com>"
