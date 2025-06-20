@@ -23,13 +23,21 @@ jobs:
 
     - name: Exécuter le script
       run: |
-        python btc_price_usd.py
-      continue-on-error: true  # Continue même en cas d'erreur pour voir les logs
+        ls -la  # Vérifie les fichiers
+        python btc_price_usd.py || echo "Script failed with error $?"
+      continue-on-error: true
 
-    - name: Vérifier le fichier généré (optionnel)
+    - name: Vérifier le fichier généré
       run: |
         if [ -f "prix_btc_usd.txt" ]; then
           cat prix_btc_usd.txt
         else
           echo "Fichier prix_btc_usd.txt non créé."
         fi
+
+    - name: Uploader le fichier comme artifact
+      uses: actions/upload-artifact@v4
+      if: always()  # Toujours uploader, même en cas d'échec
+      with:
+        name: btc-price-log
+        path: prix_btc_usd.txt
