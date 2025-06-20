@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Cloner le dépôt
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.BTC_TRACKER_TOKEN }}
 
     - name: Installer Python
       uses: actions/setup-python@v5
