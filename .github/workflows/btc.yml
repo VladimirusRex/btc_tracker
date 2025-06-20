@@ -38,14 +38,14 @@ jobs:
 
     - name: Committer et pousser le fichier
       run: |
-        echo "Token masqué : https://xxx@${{ secrets.PAT_TOKEN }}@github.com/VladimirusRex/btc_tracker.git"
+        echo "Token masqué : https://xxx@${{ secrets.BTC_TRACKER_TOKEN }}@github.com/VladimirusRex/btc_tracker.git"
         git config --global user.name "GitHub Action"
         git config --global user.email "action@github.com"
         git add prix_btc_usd.txt
         git commit -m "Mettre à jour prix_btc_usd.txt avec les données du $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-        git push https://${{ secrets.PAT_TOKEN }}@github.com/VladimirusRex/btc_tracker.git HEAD:main --force || echo "Push failed with error $?"
+        git push https://${{ secrets.BTC_TRACKER_TOKEN }}@github.com/VladimirusRex/btc_tracker.git HEAD:main --force || echo "Push failed with error $?"
       env:
-        PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        BTC_TRACKER_TOKEN: ${{ secrets.BTC_TRACKER_TOKEN }}
       continue-on-error: true
 
     - name: Post Installer Python
