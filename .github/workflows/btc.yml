@@ -1,0 +1,25 @@
+name: BTC Tracker Daily
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # Tous les jours à 8h UTC (10h France)
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cloner le dépôt
+      uses: actions/checkout@v3
+
+    - name: Installer Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Installer les dépendances
+      run: pip install requests
+
+    - name: Exécuter le script
+      run: python btc_price_usd.py
