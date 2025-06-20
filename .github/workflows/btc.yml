@@ -23,7 +23,7 @@ jobs:
 
     - name: Exécuter le script
       run: |
-        ls -la
+        ls -la  # Vérifie les fichiers
         python btc_price_usd.py || echo "Script failed with error $?"
       continue-on-error: true
 
@@ -36,11 +36,25 @@ jobs:
           echo "Fichier prix_btc_usd.txt non créé."
         fi
 
-    - name: Committer le fichier
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        file_pattern: prix_btc_usd.txt
-        commit_message: "Mettre à jour prix_btc_usd.txt avec les données du $(date +'%Y-%m-%d %H:%M:%S')"
-        commit_user_name: "GitHub Action"
-        commit_user_email: "action@github.com"
-        commit_author: "GitHub Action <action@github.com>"
+    - name: Committer et pousser le fichier
+      run: |
+        git config user.name "GitHub Action"
+        git config user.email "action@github.com"
+        git add prix_btc_usd.txt
+        git commit -m "Mettre à jour prix_btc_usd.txt avec les données du $(date +'%Y-%m-%d %H:%M:%S')"
+        git push https://${{ secrets.PAT_TOKEN }}@github.com/VladimirusRex/btc_tracker.git HEAD:main
+      env:
+        PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      continue-on-error: true  # Continue même si le push échoue pour voir les logs
+
+    - name: Post Installer Python
+      run: echo "Post Python setup"
+      if: always()
+
+    - name: Post Cloner le dépôt
+      run: echo "Post checkout"
+      if: always()
+
+    - name: Complete job
+      run: echo "Job completed"
+      if: always()
