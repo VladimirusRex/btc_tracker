@@ -38,11 +38,12 @@ jobs:
 
     - name: Committer et pousser le fichier
       run: |
+        echo "Token masqué : https://xxx@${{ secrets.PAT_TOKEN }}@github.com/VladimirusRex/btc_tracker.git"
         git config user.name "GitHub Action"
         git config user.email "action@github.com"
         git add prix_btc_usd.txt
-        git commit -m "Mettre à jour prix_btc_usd.txt avec les données du $(date +'%Y-%m-%d %H:%M:%S')"
-        git push https://${{ secrets.PAT_TOKEN }}@github.com/VladimirusRex/btc_tracker.git HEAD:main
+        git commit -m "Mettre à jour prix_btc_usd.txt avec les données du $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+        git push https://${{ secrets.PAT_TOKEN }}@github.com/VladimirusRex/btc_tracker.git HEAD:main || echo "Push failed with error $?"
       env:
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
       continue-on-error: true  # Continue même si le push échoue pour voir les logs
