@@ -75,6 +75,9 @@ def main():
     with open(PRICE_FILE, "a") as f:
         f.write(f"{now.isoformat()} - Prix BTC : {price} $ - F&G : {value} ({label})\n")
 
+    if os.getenv("TEST_TELEGRAM") == "true":
+        send_telegram(f"🧪 Test BTC Tracker : BTC {price:,.0f} $ · F&G {value} ({label})".replace(",", " "))
+
     if "Fear" not in label:
         print("Pas un jour d'achat.")
         return

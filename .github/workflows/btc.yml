@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 8 * * *'  # Tous les jours à 8h UTC (10h France en été, 9h en hiver)
   workflow_dispatch:
+    inputs:
+      test_telegram:
+        description: "Envoyer un message de test Telegram"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -32,6 +37,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TOKEN_DU_BOT }}
           TELEGRAM_CHAT_ID: ${{ secrets.CHAT_ID }}
           DCA_AMOUNT_USD: ${{ secrets.DCA_AMOUNT_USD }}
+          TEST_TELEGRAM: ${{ inputs.test_telegram }}
 
       - name: Committer les données
         run: |
