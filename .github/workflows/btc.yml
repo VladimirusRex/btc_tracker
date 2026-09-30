@@ -29,8 +29,8 @@ jobs:
       - name: Prix + Fear & Greed + alerte Telegram
         run: python btc_price_usd.py
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TOKEN_DU_BOT }}
+          TELEGRAM_CHAT_ID: ${{ secrets.CHAT_ID }}
           DCA_AMOUNT_USD: ${{ secrets.DCA_AMOUNT_USD }}
 
       - name: Committer les données

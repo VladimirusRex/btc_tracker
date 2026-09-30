@@ -9,8 +9,8 @@ Stratégie : acheter à chaque jour de peur, ne jamais vendre.
 
 ## Configuration
 Dans *Settings → Secrets and variables → Actions*, créer les secrets :
-- `TELEGRAM_BOT_TOKEN` : token du bot (via @BotFather) ;
-- `TELEGRAM_CHAT_ID` : identifiant de la conversation qui reçoit les alertes ;
+- `TOKEN_DU_BOT` : token du bot (via @BotFather) ;
+- `CHAT_ID` : identifiant de la conversation qui reçoit les alertes ;
 - `DCA_AMOUNT_USD` (optionnel) : montant affiché dans l'alerte.
 
 Aucun secret dans le code : les logs d'un dépôt public sont publics.
